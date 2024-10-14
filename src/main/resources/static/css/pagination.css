@@ -1,0 +1,46 @@
+/* pagination */
+.pagination, .pagination * {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    gap: 10px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.pagination a {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.pagination a:hover {
+    background-color: rgb(200, 230, 255);
+}
+.pagination a.active{
+    background-color: rgb(170, 210, 255);
+    border-radius: 50%;
+}
+.page-btn {
+    width: 30px;
+    height: 30px;
+    /*background: gray;*/
+    border-radius: 50%;
+    cursor: pointer;
+}
+.page-btn.double-prev {
+    background: url("/images/btn_pagination_theforemost_normal.svg") no-repeat center center;
+}
+.page-btn.prev {
+    background: url("/images/btn_pagination_previous_normal.svg") no-repeat center;
+}
+.page-btn.next {
+    background: url("/images/btn_pagination_next_normal.svg") no-repeat center center;
+}
+.page-btn.double-next {
+    background: url("/images/btn_pagination_theLast_normal.svg") no-repeat center center;
+}
+

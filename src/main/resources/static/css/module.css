@@ -1,0 +1,657 @@
+/* ------------------------------------------------------------------------------- */
+/* 모듈 클래스 */
+/* ------------------------------------------------------------------------------- */
+/* 레이아웃 */
+/*
+    기본 구조
+
+    예시)
+
+    <body>
+        <div class="wrap">
+            <div class="container">
+                <div class="inner">내비게이션</div>
+                <div class="inner">브레드크럼</div>
+                <div class="inner">search 영역</div>
+            </div>
+            <div class="container">
+                <div class="inner">게시판 필터</div>
+                <div class="inner">테이블</div>
+            </div>
+            <div class="container">
+                <div class="inner"></div>
+            </div>
+        </div>
+    </body>
+
+*/
+.wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    align-items: stretch;
+    /*border: 1px solid rgba(0, 0, 0, 0.2);*/
+    border-radius: 10px;
+    white-space: nowrap;
+    padding: 30px;
+    gap: 30px;
+    width: 100%;
+    position: relative;
+}
+.container::after {
+    content: '';
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: inherit;
+    margin: inherit;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.account {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 50%;
+    padding: 0;
+    gap: 10px;
+}
+
+.inner {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    border-radius: 10px;
+    white-space: nowrap;
+    gap: 20px;
+    width: 100%;
+}
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    gap: 20px;
+    /*width: 100%;*/
+    /*flex:1;*/
+}
+
+/* ------------------------------------------------------------------------------- */
+/* 리스트 테이블 */
+/*
+    테이블 구조
+    div.list_table_wrap > div.list_table > ul > li
+
+    예시)
+
+    <div class="list_table_wrap">
+        <div class="list_table">
+            <div class="tHead">
+                <div class="tCell"></div>
+                <div class="tCell"></div>
+            </div>
+            <div class="tRow">
+                <div class="tCell"></div>
+                <div class="tCell"></div>
+            </div>
+        </div>
+        <div class="pagination"></div>
+    </div>
+*/
+
+.list_table_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 100%;
+    gap: 30px;
+}
+.list_table {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 100%;
+}
+.list_table .tHead {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    position: relative;
+}
+.list_table .tHead::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-color: rgba(50, 50, 50, 0.2);
+}
+.list_table .tHead .tCell {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    min-width: fit-content;
+    flex: 1 1 100%;
+}
+.list_table .tRow {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+.list_table .tCell {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 1vw;
+    flex: 1 1 100%;
+    padding: 10px 15px;
+}
+
+/*.list_table*/
+.list_table.even > .tRow:nth-child(even)::after {
+    content: '';
+    background-color: rgba(50, 50, 50, 0.1);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+}
+.list_table.hover > .tRow:hover::after {
+    content: '';
+    background-color: rgba(50, 50, 50, 0.2);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+}
+
+.tRow > .tCell:nth-child(odd) {
+    background: pink;
+    flex: 1 0 10%;
+}
+.tRow > .tCell:nth-child(even) {
+    background: yellow;
+}
+
+/* ------------------------------------------------------------------------------- */
+/*
+    아코디언 테이블 구조 예시
+
+    ul에 open 탈부착으로 작동
+
+    <div class="accordion_table_wrap">
+        <div class="accordion_table">
+            <ul class="open">
+                <li>제목</li>
+                <li>상세</li>
+            </ul>
+            <ul>
+                <li>제목</li>
+                <li>상세</li>
+            </ul>
+        </div>
+        <div class="pagination"></div>
+    </div>
+
+*/
+.accordion_table_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+}
+.accordion_table {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    flex: 1;
+    width: 100%;
+}
+.accordion_table .head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.accordion_table .head > * {
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+.accordion_table ul {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.accordion_table ul li {
+    padding: 10px;
+    flex: 1;
+    align-items: center;
+    min-width: 100px;
+    display: none;
+}
+.accordion_table ul li:first-child {
+    display: flex;
+}
+.accordion_table .open > * {
+    display: flex;
+}
+/* row 색상 번갈아 적용 */
+.accordion_table.even ul:nth-child(even) {
+    background-color: rgba(50, 50, 50, 0.1);
+}
+
+.accordion_table.hover ul:hover {
+    background-color: rgba(50, 50, 50, 0.2);
+}
+/* ------------------------------------------------------------------------------- */
+/* 캐러셀 */
+.carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.carousel_item_wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /*width: 100%;*/
+    transition: transform 0.3s ease;
+    gap: 20px;
+}
+.carousel_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 100%;
+}
+.carousel_dot_wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.carousel_dot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+}
+.carousel_dot.active {
+    background-color: #000;
+}
+.carousel_btn_wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+}
+.carousel_prev, .carousel_next {
+    cursor: pointer;
+    user-select: none;
+    background: skyblue;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+.carousel_item {
+    background: pink;
+    width: 200px;
+    height: 150px;
+}
+/* ------------------------------------------------------------------------------- */
+/* 탭 박스 */
+/*
+    탭 박스 구조 예시
+
+    <div class="tabBox_wrap">
+        <div class="btn_wrap">
+            <button class="btn active">1</button>
+            <button class="btn">2</button>
+        </div>
+        <div class="tabBox">
+            <div class="list_table_wrap"></div>
+            <div class="accrodion_table_wrap none"></div>
+        </div>
+    </div>
+*/
+
+.tabBox_wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1 100%;
+}
+
+.tabBox {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex: 1 1 100%;
+}
+/* ------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------- */
+/* 브레드크럼 */
+
+.breadcrumb {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.breadcrumb * {
+    display: flex;
+}
+
+/* ------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------- */
+/* 모달 */
+/*
+    일반 모달 구조
+
+    예시)
+
+    <div class="zModal">
+        <div class="zModal_bg"></div>
+        <div class="zModal_wrap">
+            <div class="zModal_header">
+                <h2>제목</h2>
+                <div class="btn">닫기</div>
+            </div>
+            <div class="section_line"></div>
+            <div class="zModal_body">내용</div>
+            <div class="zModal_footer">
+                <div class="btn_wrap">
+                    <div class="btn">저장</div>
+                    <div class="btn">삭제</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+*/
+
+.zModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    overflow: hidden;
+}
+.zModal_bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.zModal_wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow-y: scroll;
+    position: relative;
+    width: 50%;
+    min-width: 600px;
+    min-height: 200px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 10px;
+    max-height: 80%;
+    padding: 30px;
+    gap: 20px;
+}
+.zModal_header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    font-weight: 600;
+    font-size: 24px;
+}
+.zModal_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow-y: scroll;
+    gap: 10px;
+}
+.zModal_form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+.zModal .form_label {
+    display: flex;
+    flex: 1 1 100%;
+    padding: 15px 0;
+    font-weight: 600;
+}
+.zModal .form_field {
+    display: flex;
+    flex: 1 1 500%;
+}
+
+/*
+    확인 모달 구조
+
+    예시)
+
+    <div class="zModal confirm">
+        내부는 일반모달과 동일
+    </div>
+
+*/
+.zModal.confirm .zModal_wrap {
+    max-width: 30%;
+    justify-content: space-around;
+}
+.zModal.confirm .zModal_header {
+    justify-content: center;
+}
+
+/* ------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------- */
+/* button */
+/* 버튼의 부모 박스 */
+.btn_wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /*flex: 1;*/
+    /*width: 100%;*/
+}
+
+/* 버튼에 개별 적용 */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 16px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn:focus {
+    border: none;
+}
+
+/* ------------------------------------------------------------------------------- */
+/* 커스텀 스크롤바 */
+.custom_scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.2);
+}
+.custom_scroll::-webkit-scrollbar {
+    width: 12px !important; /* 세로 스크롤바의 너비 */
+    height: 12px !important; /* 가로 스크롤바의 높이 */
+}
+.custom_scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.5); /* 트랙의 배경색 */
+    border-radius: 5px; /* 트랙의 모서리 반경 */
+}
+
+.custom_scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2); /* 핸들의 색상 */
+    border-radius: 5px; /* 핸들의 모서리 반경 */
+    border: 1px solid #000; /* 핸들의 외곽선 색상 */
+}
+
+.custom_scroll::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* 호버 상태에서 핸들의 색상 */
+}
+/* ------------------------------------------------------------------------------- */
+/* 제어 모듈 */
+
+/*
+    구역 나누는 박스
+    <div class="section_line"></div>
+*/
+.section_line {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    height: 1px;
+    width: 100%;
+    content: '' !important;
+}
+
+/* 모달 켜지면 외부 창 스크롤 막기 용도 */
+.overflow_hidden {
+    overflow: hidden !important;
+}
+
+/* flex 중앙정렬 */
+.flex_center {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 텍스트 드래그(더블클릭 포함) 금지 */
+.drag_none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.text_wrap {
+    white-space: normal !important;
+}
+/* 텍스트 말줄임표 */
+/* 적용시킬 요소를 감싼 부모가 있어야함 */
+/*
+    <div>
+        <div class="text_overflow">
+            말줄임표로 줄일 텍스트(아주 긴 내용)
+        </div>
+    </div>
+*/
+.text_overflow {
+    display: block !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
+/* flex 박스 내부 가로 or 세로 배치 */
+.row {
+    display: flex;
+    flex-direction: row !important;
+}
+
+.col {
+    display: flex;
+    flex-direction: column !important;
+}
+
+.none {
+    display: none !important;
+}
+/* 분류코드 구분 색상 */
+/* 국방 */
+.gook::after {
+    content: '';
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(80, 150, 80);
+    margin-left: 5px;
+}
+
+/* 공공 */
+.gong::after {
+    content: '';
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(80, 150, 200);
+    margin-left: 5px;
+}
+
+/* 유저 */
+.user::after {
+    content: '';
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(190, 90, 200);
+    margin-left: 5px;
+}
+
+/* ------------------------------------------------------------------------------- */

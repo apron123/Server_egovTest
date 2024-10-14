@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>메인 페이지</title>
+    <th:block th:replace="~{common/header::headerFragment}"></th:block>
+    <script
+            type="text/javascript"
+            th:src="@{/alpinejs-3.min.js}"
+            defer
+    ></script>
+</head>
+<body>
+<div class="wrap layout">
+    <div class="container col">
+        <div
+                th:replace="~{dctn/modal/header :: headerFragment(depth1 = '메인 페이지')}"
+        ></div>
+        <div class="breadcrumb">
+            <div>홈</div>
+            <div>></div>
+            <div>1</div>
+            <div>></div>
+            <div>2</div>
+            <div>></div>
+            <div>3</div>
+        </div>
+
+        <div class="section_line"></div>
+
+        <div class="inner">
+            <div class="item col">
+                <h2>메인 페이지</h2>
+            </div>
+            <div class="search_box">
+                <div class="valid_box">
+                    <select name="" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                        <option value="">4</option>
+                    </select>
+                </div>
+                <input type="text" placeholder="검색창"/>
+                <div class="btn_wrap">
+                    <button type="button" class="btn search">검색</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container col">
+        <div class="list_table_wrap">
+            <div class="list_table even">
+                <ul class="head">
+                    <li>일</li>
+                    <li>월</li>
+                    <li>화</li>
+                    <li>수</li>
+                    <li>목</li>
+                    <li>금</li>
+                    <li>토</li>
+                </ul>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                </ul>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                </ul>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="tabBox_wrap row">
+            <div class="btn_wrap col">
+                <button class="btn skyblue active">1</button>
+                <button class="btn skyblue">2</button>
+                <button class="btn skyblue">3</button>
+                <button class="btn skyblue">4</button>
+            </div>
+            <div class="tabBox">
+                <div class="list_table_wrap">
+                    <div class="list_table even">
+                        <ul class="head">
+                            <li>일1</li>
+                            <li>월</li>
+                            <li>화</li>
+                            <li>수</li>
+                            <li>목</li>
+                            <li>금</li>
+                            <li>토</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list_table_wrap none">
+                    <div class="list_table even">
+                        <ul class="head">
+                            <li>일2</li>
+                            <li>월</li>
+                            <li>화</li>
+                            <li>수</li>
+                            <li>목</li>
+                            <li>금</li>
+                            <li>토</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list_table_wrap none">
+                    <div class="list_table even">
+                        <ul class="head">
+                            <li>일3</li>
+                            <li>월ee</li>
+                            <li>화</li>
+                            <li>수</li>
+                            <li>목</li>
+                            <li>금</li>
+                            <li>토</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list_table_wrap none">
+                    <div class="list_table even">
+                        <ul class="head">
+                            <li>일4</li>
+                            <li>월rrrrr</li>
+                            <li>화</li>
+                            <li>수</li>
+                            <li>목</li>
+                            <li>금</li>
+                            <li>토</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="tabBox_wrap col">
+            <div class="btn_wrap row">
+                <button class="btn skyblue active">1</button>
+                <button class="btn skyblue">2</button>
+                <button class="btn skyblue">3</button>
+                <button class="btn skyblue">4</button>
+            </div>
+            <div class="tabBox">
+                <div class="accordion_table_wrap">
+                    <div class="accordion_table even hover">
+                        <ul class=" ">
+                            <li class="">
+                                1
+                            </li>
+                            <li>
+                                1
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>11</li>
+                            <li>11</li>
+                        </ul>
+                        <ul>
+                            <li>iiii</li>
+                            <li>iiii2</li>
+                        </ul>
+                        <ul>
+                            <li>oooo</li>
+                            <li>oooo2</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="accordion_table_wrap none">
+                    <div class="accordion_table even hover">
+                        <ul class="">
+                            <li class="">
+                                2
+                            </li>
+                            <li>
+                                2
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>22</li>
+                            <li>22</li>
+                        </ul>
+                        <ul>
+                            <li>iiii</li>
+                            <li>iiii2</li>
+                        </ul>
+                        <ul>
+                            <li>oooo</li>
+                            <li>oooo2</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="accordion_table_wrap none">
+                    <div class="accordion_table even hover">
+                        <ul class=" ">
+                            <li class="">
+                                3
+                            </li>
+                            <li>
+                                3
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>33</li>
+                            <li>33</li>
+                        </ul>
+                        <ul>
+                            <li>iiii</li>
+                            <li>iiii2</li>
+                        </ul>
+                        <ul>
+                            <li>oooo</li>
+                            <li>oooo2</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="accordion_table_wrap none">
+                    <div class="accordion_table even hover">
+                        <ul class=" ">
+                            <li class="">
+                                dfdf
+                            </li>
+                            <li>
+                                dfdf2
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>ffff</li>
+                            <li>ffff2</li>
+                        </ul>
+                        <ul>
+                            <li>iiii</li>
+                            <li>iiii2</li>
+                        </ul>
+                        <ul>
+                            <li>oooo</li>
+                            <li>oooo2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="tabBox_wrap">
+            <div class="btn_wrap">
+                <button class="btn active">1</button>
+                <button class="btn">2</button>
+            </div>
+            <div class="tabBox">
+                <div class="list_table_wrap">
+                    <div class="list_table even">
+                        <ul class="head">
+                            <li>제목</li>
+                            <li>내용</li>
+                        </ul>
+                        <ul>
+                            <li>11</li>
+                            <li>22</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list_table_wrap none">
+                    <div class="list_table even">
+                        <ul class="head">
+                            <li>제목</li>
+                            <li>내용</li>
+                        </ul>
+                        <ul>
+                            <li>33</li>
+                            <li>44</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <input type="file">
+    </div>
+    <div class="container">
+        <form action="/submit-preferences" method="post">
+            <label for="newsletter">Subscribe to Newsletter:</label>
+            <input type="checkbox" id="newsletter" name="newsletter">
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="interests">Interests:</label>
+            <form action="" id="interests">
+
+                <input type="checkbox" id="sports" name="interests" value="sports"><label for="sports">Sports</label>
+                <input type="checkbox" id="music" name="interests" value="music"><label for="music">Music</label>
+                <input type="checkbox" id="movies" name="interests" value="movies"><label for="movies">Movies</label>
+            </form>
+
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="container">
+        <form action="/login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <form action="/register" method="post">
+            <fieldset>
+                <legend>Sign Up</legend>
+
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+
+                <button type="submit">Sign Up</button>
+            </fieldset>
+        </form>
+        <form action="/contact" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+        <form action="/search" method="get">
+            <label for="search">Search:</label>
+            <input type="text" id="search" name="query" placeholder="S  earch here..." required>
+
+            <button type="submit">Search</button>
+        </form>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Upload your file:</label>
+            <input type="file" id="file" name="file" required>
+
+            <button type="submit">Upload</button>
+        </form>
+        <form action="/submit-preferences" method="post">
+            <fieldset>
+                <legend>Preferences</legend>
+
+                <label for="newsletter">Subscribe to Newsletter:</label>
+                <input type="checkbox" id="newsletter" name="newsletter">
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="interests">Interests:</label>
+                <input type="checkbox" id="sports" name="interests" value="sports"> Sports
+                <input type="checkbox" id="music" name="interests" value="music"> Music
+                <input type="checkbox" id="movies" name="interests" value="movies"> Movies
+
+                <button type="submit">Submit</button>
+            </fieldset>
+        </form>
+        <form action="">
+            <input type="radio" id="rrrr">
+            <label for="rrrr">rrrr</label>
+        </form>
+
+    </div>
+    <div class="container">
+        <div class="accordion_table_wrap">
+            <div class="accordion_table even hover">
+                <ul>
+                    <li>
+                        dfdf
+                    </li>
+                    <li>
+                        ㅇㅇㅇㅇㅇㅇㅇㅇ <button class="btn blue">버튼</button>
+                    </li>
+                </ul>
+                <ul>
+                    <li>ffff</li>
+                    <li>ffff2</li>
+                </ul>
+                <ul>
+                    <li>iiii</li>
+                    <li>iiii2</li>
+                </ul>
+                <ul>
+                    <li>oooo</li>
+                    <li>oooo2</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="goods">Item 1</div>
+            <div class="goods">Item 2</div>
+            <div class="goods">Item 3</div>
+            <div class="goods">Item 4</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="carousel">
+            <div class="carousel_item_wrap">
+                <div class="carousel_item"></div>
+                <div class="carousel_item"></div>
+                <div class="carousel_item"></div>
+                <div class="carousel_item"></div>
+            </div>
+            <div class="carousel_dot_wrap">
+                <div class="carousel_dot"></div>
+            </div>
+            <div class="carousel_btn_wrap">
+                <div class="carousel_prev"></div>
+                <div class="carousel_next"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="list_table_wrap">
+            <div class="list_table">
+                <div class="tRow">
+                    <div class="tCell text_overflow">1이름</div>
+                    <div class="tCell">1설명</div>
+                    <div class="tCell text_overflow">dfdfdfdsfsdafsfsdfsdfsddsfaasfdsfadsfadf</div>
+                    <div class="tCell">1설명</div>
+                </div>
+                <div class="tRow">
+                    <div class="tCell">2</div>
+                    <div class="tCell">2설명</div>
+                </div>
+                <div class="tRow">
+                    <div class="tCell">3이름</div>
+                    <div class="tCell">3설명</div>
+                    <div class="tCell text_overflow">
+                        ㅇㄹㅇㄹㅇㄹㅇㄹㅇㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹ
+                    </div>
+                    <div class="tCell">
+                        <div class="text_overflow">adfadfadfadfadfadfadfadfadfadffadafdafdafdafdfdadfadfafdafdafdadfadfafddfadfadfafdadffdaafdadffadafdfadafdafd</div>
+                    </div>
+                </div>
+                <div class="tRow">
+                    <div class="tCell">4이름</div>
+                    <div class="tCell">4설명</div>
+
+                </div>
+            </div>
+            <div class="pagination"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+</body>
+
+<th:block th:replace="~{common/footer::footerFragment}"></th:block>
+</html>

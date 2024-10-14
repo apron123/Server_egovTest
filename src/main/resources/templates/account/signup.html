@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sign-up</title>
+<!--    <th:block th:replace="~{common/header::headerFragment}"></th:block>-->
+    <link rel="stylesheet" th:href="@{/_reset.css}" />
+    <link rel="stylesheet" th:href="@{/pagination.css}" />
+    <link rel="stylesheet" th:href="@{/style.css}" />
+    <link rel="stylesheet" th:href="@{/module.css}" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script type="text/javascript" th:src="@{/jquery-3.7.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/datepicker.js}"></script>
+    <script type="text/javascript" th:src="@{/axios-1.6.7.min.js}"></script>
+    <script
+            type="text/javascript"
+            th:src="@{/alpinejs-axios-1.0.5.min.js}"
+            defer
+    ></script>
+    <script
+            type="text/javascript"
+            th:src="@{/alpinejs-3.min.js}"
+            defer
+    ></script>
+  </head>
+  <body x-data="signUpAlpineData()">
+    <div class="wrap layout">
+      <div class="account">
+        <div th:replace="~{dctn/modal/header :: headerFragment(depth1 = '회원가입')}"></div>
+        <div class="top_area">
+          <div>
+            <div class="title_box">
+              <h2>회원가입</h2>
+              <!-- <h1 class="title">{{ .title}}</h1> -->
+              <!-- <img class="image_1" src="../static/img/IMG_0050.PNG" alt="이미지 파일" /> -->
+            </div>
+          </div>
+        </div>
+        <div class="section_area">
+          <div class="inner col">
+            <h2>| 기본정보</h2>
+          </div>
+          <div class="inner col">
+            <div class="inner row mra">
+              <label class="form_label">ID</label>
+              <span x-text="verifyMessage.userId" :style="verifyYn.userId ? 'color: blue;' : 'color: red;'"></span>
+            </div>
+            <label>
+              <input class="form_field" type="text" placeholder="영문 소문자" x-model="userInfo.user_id" @focusout="checkIdDuplicate()"/>
+            </label>
+          </div>
+          <div class="inner col">
+            <div class="inner row mra">
+              <label class="form_label">비밀번호</label>
+              <span x-text="verifyMessage.userPw" :style="verifyYn.userPw ? 'color: blue;' : 'color: red;'"></span>
+            </div>
+            <label>
+              <input class="" type="password" placeholder="8~12자의 영문자, 숫자, 특수문자 조합" x-model="userInfo.user_pw" @focusout="checkPw()"/>
+            </label>
+          </div>
+          <div class="inner col">
+            <label class="form_label">비밀번호 확인</label>
+            <label>
+              <input class="form_field" type="password" placeholder="비밀번호 확인" x-model="verifyPw" @focusout="checkVerifyPw()"/>
+            </label>
+          </div>
+          <div class="inner col">
+            <label class="form_label">이름</label>
+            <label>
+              <input class="form_field" type="text" placeholder="이름 입력" x-model="userInfo.user_nm" />
+            </label>
+          </div>
+          <div class="inner col">
+            <div class="inner row mra">
+              <label class="form_label">Email</label>
+              <span x-text="verifyMessage.userEmail" :style="verifyYn.userEmail ? 'color: blue;' : 'color: red;'"></span>
+            </div>
+            <label>
+              <input class="form_field" type="email" placeholder="이메일 입력" x-model="userInfo.user_email" />
+            </label>
+            <input :disabled="verifyEmail.requestState" type="button" class="btn lightgray" @click="sendEmail()" value="인증 요청" :style="verifyEmail.requestState ? 'opacity: 0.5; cursor: not-allowed;' : ''" />
+            <div class="inner col" x-show="verifyEmail.sendState">
+              <label>
+                <input  type="number" class="form_field" placeholder="6자리 인증코드 입력" x-model="verifyEmail.code" />
+              </label>
+              <p >
+                <span x-show="!verifyYn.userEmail" x-text="formattedTime"></span>
+                <span x-show="verifyYn.userEmail" :style="'color: blue;'">인증 되었습니다.</span>
+              </p>
+              <input  :disabled="verifyYn.userEmail" type="button" class="btn lightgray" @click="checkEmail()" value="확인" :style="verifyYn.userEmail ? 'opacity: 0.5; cursor: not-allowed;' : ''" />
+            </div>
+          </div>
+          <div class="inner col">
+            <div class="inner row mra">
+              <label class="form_label">연락처</label>
+              <span x-text="verifyMessage.userCntadr" :style="verifyYn.userCntadr ? 'color: blue;' : 'color: red;'"></span>
+            </div>
+            <label>
+              <input class="form_field" type="number" placeholder="-를 제외한 숫자만 입력" x-model="userInfo.user_cntadr" @focusout="checkAdrDuplicate($event)" />
+            </label>
+          </div>
+        </div>
+        <div class="section_area">
+          <div class="inner col">
+            <h2>| 기관정보</h2>
+          </div>
+          <div class="inner col">
+            <label class="form_label">기관 구분</label>
+            <label>
+              <select class="form_field" @change="selectClassification()" x-model="classification">
+                <option value="">선택</option>
+                <option value="MIL">군</option>
+                <option value="DFINPDR">방산업체</option>
+              </select>
+            </label>
+            <label x-show="classification === ''">
+              <select class="form_field">
+                <option value="">선택</option>
+              </select>
+            </label>
+            <label x-show="classification === 'MIL'">
+              <select class="form_field" @change="selectUserRole()" x-model="userInfo.user_role">
+                <option value="">선택</option>
+                <option value="ARMY">육군</option>
+                <option value="NAVY">해군</option>
+                <option value="AF">공군</option>
+                <option value="MRCPS">해병대</option>
+              </select>
+            </label>
+            <label x-show="classification === 'DFINPDR'">
+              <select class="form_field" @change="selectUserRole()" x-model="userInfo.user_role">
+                <option value="">선택</option>
+                <option value="HWS">한화시스템</option>
+                <option value="HDR">현대로템</option>
+                <option value="HDKSOE">HD한국조선해양</option>
+                <option value="HHI">HD현대중공업</option>
+                <option value="HWO">한화오션</option>
+                <option value="KAI">한국항공우주산업</option>
+                <option value="LIG">LIG넥스원</option>
+                <option value="HWAS">한화에어로스페이스</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div>
+          <div class="btn_wrap">
+            <input
+              :disabled="!verifyState"
+              type="button"
+              class="btn lightgray"
+              :style="!verifyState ? 'opacity: 0.5; cursor: not-allowed;' : ''"
+              @click="submitUserInfo()"
+              value="회원가입"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer>
+<!--    <th:block th:replace="~{common/footer::footerFragment}"></th:block>-->
+  </footer>
+  <script type="text/javascript" th:src="@{/common/function.js}"></script>
+  <script type="text/javascript" th:src="@{/validate/validate.js}"></script>
+  <script type="text/javascript" th:src="@{/common/apiManager.js}"></script>
+  <script>
+    function signUpAlpineData() {
+      return {
+        userInfo: {
+          user_id: "",
+          user_pw: "",
+          user_nm: "",
+          user_email: "",
+          user_cntadr: "",
+          user_role: ""
+        },
+        verifyYn: {
+          userId: false,
+          userPw: false,
+          userEmail: false,
+          userCntadr: false,
+          userRole: false
+        },
+        verifyMessage: {
+          userId: "",
+          userPw: "",
+          userEmail: "",
+          userCntadr: ""
+        },
+        checkUserInfo: {
+          user_id: "",
+          user_cntadr: ""
+        },
+        verifyEmail: {
+          sendState: false,
+          requestState: false,
+          user_email: "",
+          code: ""
+        },
+        timer: 0,
+        intervalId: null,
+        verifyPw: "",
+        classification: "",
+        get verifyState() {
+          return this.verifyYn.userId &&
+                  this.verifyYn.userPw &&
+                  this.verifyYn.userEmail &&
+                  this.verifyYn.userCntadr &&
+                  this.verifyYn.userRole;
+        },
+        selectClassification() {
+          this.verifyYn.userRole = false
+          this.userInfo.user_role = ""
+        },
+        selectUserRole() {
+          this.verifyYn.userRole = !!this.userInfo.user_role;
+        },
+        checkIdDuplicate() {
+          if(this.userInfo.user_id) {
+            this.checkUserInfo.user_id = this.userInfo.user_id
+            fetch("/user/check/id", {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+              body: JSON.stringify(this.checkUserInfo),
+            })
+              .then((response) => response.json())
+              .then((result) => {
+                if(result.result_data) {
+                  this.verifyYn.userId = true
+                  this.verifyMessage.userId = "사용할 수 있는 아이디 입니다."
+                } else {
+                  this.verifyYn.userId = false
+                  this.verifyMessage.userId = "사용할 수 없는 아이디 입니다."
+                }
+              })
+          } else {
+            this.verifyYn.userId = false
+            this.verifyMessage.userId = "사용할 수 없는 아이디 입니다."
+          }
+        },
+        checkAdrDuplicate(event) {
+          event.target.value = event.target.value.replace(/-/g, '');
+          this.userInfo.user_cntadr = event.target.value;
+          if(this.userInfo.user_cntadr.length < 9 || this.userInfo.user_cntadr.length > 12) {
+            this.verifyYn.userCntadr = false
+            this.verifyMessage.userCntadr = "사용할 수 없는 연락처 입니다."
+          } else if(this.userInfo.user_cntadr) {
+            this.checkUserInfo.user_cntadr = this.userInfo.user_cntadr
+            fetch("/user/check/adr", {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+              body: JSON.stringify(this.checkUserInfo),
+            })
+              .then((response) => response.json())
+              .then((result) => {
+                if(result.result_data) {
+                  this.verifyYn.userCntadr = true
+                  this.verifyMessage.userCntadr = "사용할 수 있는 연락처 입니다."
+                } else {
+                  this.verifyYn.userCntadr = false
+                  this.verifyMessage.userCntadr = "사용할 수 없는 연락처 입니다."
+                }
+              })
+          } else {
+            this.verifyYn.userCntadr = false
+            this.verifyMessage.userCntadr = "사용할 수 없는 연락처 입니다."
+          }
+        },
+        checkPw() {
+          // 정규식: 8~12자, 영문자 대소문자, 숫자, 특수문자 각각 1개 이상 포함
+          const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,12}$/;
+          this.verifyYn.userPw = false
+          this.verifyPw = ""
+          if(!regex.test(this.userInfo.user_pw)) {
+            this.verifyMessage.userPw = "비밀번호는 8~12자의 영문자, 숫자, 특수문자 조합으로 입력해주세요."
+          }
+        },
+        checkVerifyPw() {
+          if(!this.userInfo.user_pw) {
+            this.verifyYn.userPw = false
+            this.verifyMessage.userPw = "비밀번호는 8~12자의 영문자, 숫자, 특수문자 조합으로 입력해주세요."
+          } else if(this.userInfo.user_pw !== this.verifyPw) {
+            this.verifyYn.userPw = false
+            this.verifyMessage.userPw = "비밀번호가 같지 않습니다. 다시 입력해주세요."
+          } else {
+            this.verifyYn.userPw = true
+            this.verifyMessage.userPw = "사용할 수 있는 비밀번호 입니다."
+          }
+        },
+        sendEmail() {
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          if(emailRegex.test(this.userInfo.user_email)) {
+            this.verifyEmail.user_email = this.userInfo.user_email
+            this.verifyEmail.sendState = false
+            this.verifyEmail.requestState = true
+            this.verifyYn.userEmail = false
+            fetch("/user/send/email", {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+              body: JSON.stringify(this.verifyEmail),
+            })
+              .then((response) => response.json())
+              .then((result) => {
+                this.verifyEmail.requestState = false
+                if (result.result_data) {
+                  this.verifyEmail.sendState = true
+                  this.verifyMessage.userEmail = "인증코드를 입력해주세요"
+                  this.startTimer(300);
+                  alert("인증메일이 발송 되었습니다.");
+                } else {
+                  this.verifyMessage.userEmail = "사용할 수 없는 이메일 입니다."
+                }
+              });
+          } else {
+            this.verifyYn.userEmail = false
+            this.verifyEmail.sendState = false
+            this.verifyMessage.userEmail = "이메일 형식으로 입력해주세요."
+          }
+        },
+        checkEmail() {
+          fetch("/user/verify/email", {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(this.verifyEmail),
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              if (result.result_data) {
+                this.verifyYn.userEmail = true
+                this.verifyMessage.userEmail = ""
+                this.stopTimer()
+              } else {
+                this.verifyYn.userEmail = false
+                alert("인증코드를 다시 입력해주세요.")
+              }
+            });
+        },
+        startTimer(seconds) {
+          this.stopTimer();
+          this.timer = seconds;
+          this.intervalId = setInterval(() => {
+            if (this.timer > 0) {
+              this.timer--;
+            } else {
+              clearInterval(this.intervalId);
+            }
+          }, 1000); // 1초마다 타이머 감소
+        },
+        stopTimer() {
+          if (this.intervalId) {
+            clearInterval(this.intervalId); // 타이머 중지
+            this.intervalId = null; // 타이머 ID 초기화
+          }
+        },
+        get formattedTime() {
+          let minutes = Math.floor(this.timer / 60);
+          let seconds = this.timer % 60;
+          return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        },
+        submitUserInfo() {
+          fetch("/user/create", {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(this.userInfo),
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              if (result.result_code === 200) {
+                alert("회원가입에 성공하였습니다!");
+                location.href = "/view/account/login";
+              } else {
+                alert(data.result_msg);
+              }
+            });
+        }
+      };
+    }
+  </script>
+</html>

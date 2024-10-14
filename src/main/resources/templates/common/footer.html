@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="footerFragment"
+>
+  <head>
+    <script
+            type="text/javascript"
+            th:src="@{/alpinejs-axios-1.0.5.min.js}"
+            defer
+    ></script>
+    <script
+            type="text/javascript"
+            th:src="@{/alpinejs-3.min.js}"
+            defer
+    ></script>
+  </head>
+  <div class="wrap" x-data="footerAlpineData()">
+    <div class="btn_wrap">
+      <span>일일 방문자</span>
+      <p x-text="todayVistorCount">0</p>
+    </div>
+    <div class="btn_wrap">
+      <span>총 방문자</span>
+      <p x-text="totalVistorCount">0</p>
+    </div>
+  </div>
+  <script type="text/javascript" th:src="@{/common/axios.js}"></script>
+  <script type="text/javascript" th:src="@{/common/apiManager.js}"></script>
+  <script type="text/javascript" th:src="@{/common/dateFormat.js}"></script>
+  <script type="text/javascript" th:src="@{/common/page.js}"></script>
+  <script type="text/javascript" th:src="@{/common/function.js}"></script>
+  <script type="text/javascript" th:src="@{/account/logout.js}"></script>
+  <script type="text/javascript" th:src="@{/module.js}"></script>
+  <script>
+    function footerAlpineData() {
+      return {
+        todayVistorCount: 0,
+        totalVistorCount: 0,
+        init() {
+          this.getTodayVisitor();
+          this.getTotalVisitor();
+        },
+        getTodayVisitor() {
+          //url 만들어주는 함수 endpoint
+          const url = createURL("/vstr/today");
+          //api 호출
+          fetch(url)
+                  .then((response) => response.json())
+                  .then((data) => {
+                    this.todayVistorCount = data.result_data;
+                  });
+        },
+        getTotalVisitor() {
+          //url 만들어주는 함수 endpoint
+          const url = createURL("/vstr");
+          //api 호출
+          fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              this.totalVistorCount = data.result_data;
+            });
+        }
+      }
+    }
+  </script>
+</html>

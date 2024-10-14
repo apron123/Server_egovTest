@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>List</title>
+    <th:block th:replace="common/header::headerFragment"></th:block>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text">목록</h1>
+      <div class="section">
+        <div>
+          <div>검색 조건</div>
+          <select name="selectVal" id="selectVal">
+            <option name="selectVal" value="standard">표준화명</option>
+            <option name="selectVal" value="word">용어</option>
+          </select>
+          <input type="text" id="searchVal" />
+          <input
+            type="button"
+            id="searchBtn"
+            value="검색"
+            onclick="search(1)"
+          />
+          <input
+            type="button"
+            id="logoutBtn"
+            value="로그아웃"
+            onclick="logout()"
+          />
+        </div>
+        <div>
+          <div>조회된 데이터 수 :</div>
+          <div id="dataCnt"></div>
+          <input
+            type="button"
+            onclick="location.href = '/view/example/edit'"
+            value="등록"
+          />
+        </div>
+        <div class="tableDiv">
+          <table id="mainTable">
+            <thead>
+              <tr>
+                <th>표준화명</th>
+                <th>용어명</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 예제 내용 -->
+              <tr>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- page 영역 -->
+        <div class="pagination">
+          <ul class="pagination-box" id="pagination-list">
+            <li class="page-btn double-prev-disable"></li>
+            <li class="page-btn prev-disable"></li>
+            <li class="num active">1</li>
+            <li class="num">2</li>
+            <li class="num">3</li>
+            <li class="num">4</li>
+            <li class="page-btn next"></li>
+            <li class="page-btn double-next"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer>
+    <th:block th:replace="common/footer::footerFragment"></th:block>
+  </footer>
+
+  <script type="text/javascript" th:src="@{/example/list.js}"></script>
+</html>

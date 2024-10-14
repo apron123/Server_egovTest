@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit</title>
+    <th:block th:replace="common/header::headerFragment"></th:block>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text" id="title">등록</h1>
+      <div class="section">
+        <div>
+          <input type="hidden" id="id" />
+        </div>
+        <div>
+          <span>표준화명</span>
+          <input type="text" id="standard" onchange="checkStandard()" />
+          <div id="standard-count"></div>
+        </div>
+        <div>
+          <span>용어명</span>
+          <input type="text" id="word" />
+        </div>
+        <div>
+          <span>설명</span>
+          <textarea id="desc"> </textarea>
+        </div>
+        <div>
+          <span>작성자</span>
+          <input type="text" id="upload-user" />
+          <span>작성시간</span>
+          <span id="upload-time"></span>
+        </div>
+        <div id="updateDiv" style="display: none">
+          <span>수정자</span>
+          <input type="text" id="update-user" />
+          <span>수정시간</span>
+          <span id="update-time"></span>
+        </div>
+        <div>
+          <input type="button" class="" onclick="upload()" value="등록" />
+          <input
+            type="button"
+            onclick="location.href = '/view/example/list'"
+            value="목록"
+          />
+          <input
+            id="deleteBtn"
+            type="button"
+            onclick="del()"
+            value="삭제"
+            style="display: none"
+          />
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <footer>
+    <th:block th:replace="common/footer::footerFragment"></th:block>
+  </footer>
+
+  <script type="text/javascript" th:src="@{/example/edit.js}"></script>
+</html>

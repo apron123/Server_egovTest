@@ -1,0 +1,34 @@
+<nav
+    th:fragment="nav (data)"
+    class="pagination flex text-white mta"
+>
+    <ul class="pagination-box flex aic jcc">
+        <li
+            class="page-btn double-prev"
+            data-page-num='1'
+            th:classappend="${(data.page > 1)} ? '' : 'disabled'"
+        ></li>
+        <li
+            class="page-btn prev"
+            th:attr="data-page-num=${data.page - 1}"
+            th:classappend="${(data.page > 1)} ? '' : 'disabled'"
+        ></li>
+        <th:block th:each="num : ${#numbers.sequence(data.startPage, data.endPage)}">
+            <li
+                class="num"
+                th:attr="data-page-num=${num}"
+                th:classappend="${(data.page == num)} ? 'active' : ''" th:text="${num}"
+            ></li>
+        </th:block>
+        <li
+            class="page-btn next"
+            th:attr="data-page-num=${data.page + 1}"
+            th:classappend="${(data.page < data.last)} ? '' : 'disabled'"
+        ></li>
+        <li
+            class="page-btn double-next"
+            th:attr="data-page-num=${data.last}"
+            th:classappend="${(data.page < data.last)} ? '' : 'disabled'"
+        ></li>
+    </ul>
+</nav>

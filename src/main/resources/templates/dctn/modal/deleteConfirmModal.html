@@ -1,0 +1,21 @@
+<div x-show.important="deleteConfirmModal" class="zModal confirm">
+    <div class="zModal_bg"></div>
+    <div class="zModal_wrap">
+        <div class="zModal_header">
+            <!-- <h2 class="flex_center" x-text="`총 ${deleteArray.length}개의 단어를 삭제하시겠습니까?`"></h2> -->
+            <h2 class="flex_center" x-text="`단어를 삭제하시겠습니까?`"></h2>
+        </div>
+        <div class="btn_wrap">
+            <button @click="deleteApiMethod()" type="button" class="btn blue">
+                확인
+            </button>
+            <button
+                    @click="deleteConfirmModal = false;"
+                    type="button"
+                    class="btn red"
+            >
+                취소
+            </button>
+        </div>
+    </div>
+</div>

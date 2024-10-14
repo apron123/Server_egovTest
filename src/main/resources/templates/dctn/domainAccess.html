@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <!--        <th:block th:replace="common/header::headerFragment"></th:block>-->
+    <link rel="stylesheet" th:href="@{/_reset.css}" />
+    <link rel="stylesheet" th:href="@{/modal.css}" />
+    <link rel="stylesheet" th:href="@{/pagination.css}" />
+    <link rel="stylesheet" th:href="@{/style.css}" />
+    <link rel="stylesheet" th:href="@{/module.css}" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script type="text/javascript" th:src="@{/jquery-3.7.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/datepicker.js}"></script>
+    <script type="text/javascript" th:src="@{/axios-1.6.7.min.js}"></script>
+    <script
+      type="text/javascript"
+      th:src="@{/alpinejs-axios-1.0.5.min.js}"
+      defer
+    ></script>
+    <script
+      type="text/javascript"
+      th:src="@{/alpinejs-3.min.js}"
+      defer
+    ></script>
+  </head>
+
+  <body x-data="domainAlpineData">
+    <div class="wrap layout">
+      <div class="container col">
+        <div
+          th:replace="~{dctn/modal/header :: headerFragment(depth1 = '도메인 승인')}"
+        ></div>
+      </div>
+
+      <div class="container col">
+        <button class="btn lightgray" @click="openConfirmModal()">승인</button>
+        <div class="list_table_wrap">
+          <div class="list_table even hover" x-init="getData()">
+            <div class="tHead">
+              <div class="tCell table_checkbox">
+                <input type="checkbox" id="all_check" @click="checkAll()" />
+              </div>
+              <div class="tCell">도메인 명</div>
+              <div class="tCell">도메인 타입</div>
+              <div class="tCell">도메인 분류</div>
+              <div class="tCell">분류어</div>
+              <div class="tCell">대표여부</div>
+              <div class="tCell">신청자</div>
+            </div>
+            <template
+              x-for="data in domainList"
+              :key="data.dctn_domain_info_seq"
+            >
+              <div class="tRow">
+                <div class="tCell table_checkbox flex_center">
+                  <input
+                    type="checkbox"
+                    name="delete"
+                    :data-seq="data.dctn_domain_info_seq"
+                  />
+                </div>
+                <div class="tCell flex_center">
+                  <span x-text="data.domain_nm" class="text_wrap"></span>
+                </div>
+                <div class="tCell flex_center">
+                  <span
+                    x-text="data.logic_data_type_cd_nm"
+                    class="text_wrap"
+                  ></span>
+                </div>
+                <div class="tCell flex_center">
+                  <span
+                    x-text="data.domain_type_cd_nm"
+                    class="text_wrap"
+                  ></span>
+                </div>
+                <div class="tCell flex_center">
+                  <span
+                    x-text="data.domain_clsfct_word"
+                    class="text_wrap"
+                  ></span>
+                </div>
+                <div class="tCell flex_center">
+                  <span x-text="data.rpst_yn" class="text_wrap"></span>
+                </div>
+                <div class="tCell flex_center">
+                  <span x-text="data.wrtr" class="text_wrap"></span>
+                </div>
+              </div>
+            </template>
+          </div>
+          <div class="pagination">
+            <ul id="pagination-list">
+              <!--                        <li class="page-btn double-prev-disable"></li>-->
+              <!--                        <li class="page-btn prev-disable"></li>-->
+              <!--                        <li class="active">1</li>-->
+              <!--                        <li class="">2</li>-->
+              <!--                        <li class="">3</li>-->
+              <!--                        <li class="">4</li>-->
+              <!--                        <li class="page-btn next"></li>-->
+              <!--                        <li class="page-btn double-next"></li>-->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer>
+    <!--    <th:block th:replace="common/footer::footerFragment"></th:block>-->
+  </footer>
+  <script type="text/javascript" th:src="@{/common/axios.js}"></script>
+  <script type="text/javascript" th:src="@{/common/apiManager.js}"></script>
+  <script type="text/javascript" th:src="@{/common/function.js}"></script>
+  <script type="text/javascript" th:src="@{/validate/validate.js}"></script>
+  <script type="text/javascript" th:src="@{/sdctn/dctnpage.js}"></script>
+  <script
+    type="text/javascript"
+    th:src="@{/validate/schema/dctnDomain.js}"
+  ></script>
+  <script th:inline="javascript">
+    /**
+     * Alpine instance with data retrieval
+     */
+    document.addEventListener("alpine:init", () => {
+      Alpine.data("domainAlpineData", () => ({
+        //modal list
+        modalList: {
+          save: 0,
+          view: 1,
+        },
+        // //api data 최상위
+        dataList: [],
+        // //api data result_data.content
+        domainList: [],
+        //삭제 seq 담기는 배열
+        deleteArray: [],
+        // // 초기화 메서드
+
+        getData() {
+          axiosRequest("GET", "dctn/appry/list/domain")
+            .then((response) => {
+              const data = response;
+              this.dataList = data;
+              this.domainList = data.result_data;
+            })
+            .catch((errMsgData) => {
+              console.error(errMsgData);
+            });
+        },
+
+        // 승인 버튼 클릭 시 호출되는 함수
+        openConfirmModal() {
+          this.deleteArray = [];
+          document
+            .querySelectorAll('input[name="delete"]:checked')
+            .forEach((checkbox) => {
+              const dctnSeqElement = checkbox.getAttribute("data-seq");
+              if (dctnSeqElement > 0) {
+                this.deleteArray.push(dctnSeqElement);
+              }
+            });
+
+          if (
+            confirm(this.deleteArray.length + "개의 데이터를 승인하시겠습니까?")
+          ) {
+            let deleteJSon = {
+              user_id: "admin",
+              ids: [...this.deleteArray],
+            };
+
+            axiosRequest("PUT", "dctn/domain/approve", deleteJSon)
+              .then(function (data) {
+                console.log("Success:", data);
+                alert("승인에 성공하였습니다!");
+                window.location.reload();
+              })
+              .catch(function (errMsgData) {
+                console.log(errMsgData);
+                alert("승인에 실패하였습니다!");
+              });
+          } else {
+            alert("취소하였습니다");
+            return;
+          }
+        },
+      }));
+    });
+  </script>
+</html>

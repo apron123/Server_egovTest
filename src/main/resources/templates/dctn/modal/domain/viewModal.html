@@ -1,0 +1,315 @@
+<div
+  x-data="viewModalAlpineData()"
+  x-show.important="viewModal"
+  class="zModal"
+  :class="{[VAILDATE_CONF.class] : !transFlag }"
+  id="viewModalList"
+>
+  <div class="zModal_bg"></div>
+    <!-- 조회 시 --><!-- 조회 시 --><!-- 조회 시 -->
+    <!-- 조회 시 --><!-- 조회 시 --><!-- 조회 시 -->
+    <!-- 조회 시 --><!-- 조회 시 --><!-- 조회 시 -->
+    <template x-if="transFlag">
+      <div class="zModal_wrap">
+        <div class="zModal_header">
+          <h2>도메인 조회</h2>
+          <button @click="viewModal = false" type="button" class="btn lightgray mla">
+            닫기
+          </button>
+        </div>
+        <div class="section_line"></div>
+        <div class="zModal_body">
+          <div class="zModal_form">
+            <label class="form_label">도메인 명</label>
+            <span class="form_field" x-text="domainRgt.domain_nm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">도메인 분류어</label>
+            <span class="form_field" x-text="domainRgt.domain_clsfct_word"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">논리 데이터 유형</label>
+            <span class="form_field" x-text="domainRgt.logic_data_type_cd_nm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">도메인 유형</label>
+            <span class="form_field" x-text="domainRgt.domain_type_cd_nm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">대표 여부</label>
+            <span class="form_field" x-text="domainRgt.rpst_yn"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">분류 코드</label>
+            <span class="form_field" x-text="domainRgt.cd_nm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">작성자</label>
+            <span class="form_field" x-text="domainRgt.wrtr"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">생성 일시</label>
+            <span class="form_field" x-text="domainRgt.crt_dttm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">수정자</label>
+            <span class="form_field" x-text="domainRgt.mdfr || '-직전 수정 이력 없음-'"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">수정 사유</label>
+            <span class="form_field" x-text="domainRgt.mdfr_rsn || '-직전 수정 이력 없음-'"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">수정 일시</label>
+            <span class="form_field"
+              x-text="domainRgt.mdfc_dttm || '-직전 수정 이력 없음-'"
+            ></span>
+          </div>
+        </div>
+        <div class="zModal_footer">
+          <div class="btn_wrap">
+            <template x-if="checkWrtrUserId(domainRgt.wrtr)">
+              <button @click="updateFlag()" type="button" class="btn blue">
+                수정
+              </button>
+            </template>
+            <template x-if="checkWrtrUserId(domainRgt.wrtr)">
+              <button class="btn red" @click="openDeleteModal()">
+                삭제
+              </button>
+            </template>
+          </div>
+        </div>
+      </div>
+    </template>
+    <!-- 수정 시 --><!-- 수정 시 --><!-- 수정 시 -->
+    <!-- 수정 시 --><!-- 수정 시 --><!-- 수정 시 -->
+    <!-- 수정 시 --><!-- 수정 시 --><!-- 수정 시 -->
+    <template x-if="!transFlag">
+      <div class="zModal_wrap">
+        <div class="zModal_header">
+          <h2>도메인 수정</h2>
+          <button @click="viewModal = false" type="button" class="btn lightgray mla">
+            닫기
+          </button>
+        </div>
+        <div class="section_line"></div>
+        <div class="zModal_body">
+          <div class="zModal_form">
+            <label class="form_label" data-key="domain_nm">도메인 명</label>
+            <input class="form_field" x-model="viewModalDctnDomainRgt.domain_nm" />
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="domain_clsfct_word">도메인 분류어</label>
+            <input class="form_field" x-model="viewModalDctnDomainRgt.domain_clsfct_word" />
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="logic_data_type">논리 데이터 유형</label>
+            <select class="form_field"
+              x-model="viewModalDctnDomainRgt.logic_data_type"
+              @change="selectDropdown($event.target.value)"
+            >
+              <option value="">선택</option>
+              <option value="XML">XML타입</option>
+              <option value="CHAR">고정길이문자형</option>
+              <option value="VARCHAR">가변길이문자형</option>
+              <option value="ACTNO">실수</option>
+              <option value="ALWC">정수</option>
+              <option value="DATE">날짜-DATE</option>
+              <option value="TS">날짜-TIMESTAMP</option>
+              <option value="CLOB">문자형대형객체</option>
+              <option value="BLOB">바이너리대형객체</option>
+            </select>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="domain_type">도메인 유형</label>
+            <select class="form_field"
+              x-model="viewModalDctnDomainRgt.domain_type"
+              @change="selectDropdown($event.target.value)"
+            >
+              <option value="">선택</option>
+              <option value="ANG">각도</option>
+              <option value="AMTMN">금액</option>
+              <option value="DT">날짜</option>
+              <option value="AREA">면적</option>
+              <option value="WGHT">무게</option>
+              <option value="NO">번호</option>
+              <option value="RATE">비율</option>
+              <option value="QTY">수량</option>
+              <option value="TIME">시간</option>
+              <option value="IDTFR">식별자</option>
+              <option value="TPRT">온도</option>
+              <option value="CD">코드</option>
+              <option value="NAME">이름</option>
+              <option value="COORD">좌표</option>
+              <option value="DMNSN">차원</option>
+              <option value="VLM">체적</option>
+              <option value="TEXT">텍스트</option>
+            </select>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="rpst_yn">대표 여부</label>
+            <select class="form_field"
+              x-model="viewModalDctnDomainRgt.rpst_yn"
+              @change="selectDropdown($event.target.value)"
+            >
+              <option value="">선택</option>
+              <option value="Y">예</option>
+              <option value="N">아니오</option>
+            </select>
+          </div>
+          <template x-if="checkAdminId()">
+            <div class="zModal_form">
+              <label class="form_label" data-key="clsfct">분류 코드</label>
+              <select class="form_field"
+                x-model="viewModalDctnDomainRgt.clsfct"
+                @change="selectDropdown($event.target.value)"
+              >
+                <option value="">선택</option>
+                <option value="ND">국방데이터</option>
+                <option value="PBL">공공데이터</option>
+                <option value="USER">CBM+데이터</option>
+              </select>
+            </div>
+          </template>
+
+          <template x-if="!checkAdminId()">
+            <div class="zModal_form">
+              <label class="form_label" data-key="clsfct">분류 코드</label>
+              <select class="form_field" x-model="viewModalDctnDomainRgt.clsfct">
+                <option value="USER">CBM+데이터</option>
+              </select>
+            </div>
+          </template>
+
+          <div class="zModal_form">
+            <label class="form_label" data-key="wrtr">작성자</label>
+            <span class="form_field" x-text="viewModalDctnDomainRgt.wrtr"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="crt_dttm">생성 일시</label>
+            <span class="form_field"
+              x-text="viewModalDctnDomainRgt.crt_dttm || '-직전 수정 이력 없음-'"
+            ></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="mdfr">수정자</label>
+            <span class="form_field" x-text="viewModalDctnDomainRgt.mdfr"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="mdfr_rsn">수정 사유</label>
+            <input class="form_field" x-model="viewModalDctnDomainRgt.mdfr_rsn" />
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="mdfc_dttm">수정 일시</label>
+            <span class="form_field"
+              x-text="viewModalDctnDomainRgt.mdfc_dttm || '-직전 수정 이력 없음-'"
+            ></span>
+          </div>
+        </div>
+        <div class="zModal_footer">
+          <div class="btn_wrap">
+            <button @click="save()" type="button" class="btn blue">저장</button>
+            <button @click="transFlag = true;" type="button" class="btn red">
+              취소
+            </button>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+<script>
+  function viewModalAlpineData() {
+    return {
+      //상세 조회 or 수정 모달 flag
+      transFlag: true,
+      init() {},
+      closeViewModal() {
+        this.transFlag = true;
+        this.viewModal = false;
+      },
+      updateFlag() {
+        this.transFlag = false;
+        this.viewModalDctnDomainRgt = { ...this.domainRgt };
+      },
+      save() {
+        let error = "";
+        setValidAttribute(this.validateSchema);
+        // 필요한 값만 보내야 함. 수정 시 필요한 값만
+        const {
+          domain_nm,
+          domain_clsfct_word,
+          logic_data_type,
+          domain_type,
+          rpst_yn,
+          clsfct,
+          wrtr,
+          mdfr,
+          mdfr_rsn,
+        } = this.viewModalDctnDomainRgt;
+        // 새로운 오브젝트 생성 해야함
+        const newObject = {
+          domain_nm,
+          domain_clsfct_word,
+          logic_data_type,
+          domain_type,
+          rpst_yn,
+          clsfct,
+          wrtr,
+          mdfr: this.userId,
+          mdfr_rsn,
+        };
+        // validateCommonMethod에 사용할 array 만들어 주는 함수 호출
+        let arrayValidateObj = getInputListValidate(newObject);
+        error = validateCommonMethod(arrayValidateObj);
+
+        if (error !== "") {
+          alert(error); // 에러 메시지를 표시
+          return;
+        }
+        console.log(newObject);
+        fetch(
+          "/dctn/domain/" + this.viewModalDctnDomainRgt.dctn_domain_info_seq,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "PUT",
+            body: JSON.stringify(convertEmptyStringsToNull(newObject)),
+          }
+        )
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result);
+            if (result.result_flag) {
+              alert("수정 성공");
+              // 상세 보기 모달로 변경
+              this.transFlag = true;
+              //조회 api 요청
+              this.openViewModal(
+                null,
+                this.viewModalDctnDomainRgt.dctn_domain_info_seq
+              );
+            } else {
+              alert("수정 실패: " + result.result_msg);
+            }
+          });
+      },
+      selectDropdown(labelKey, dropDownValue) {
+        this.viewModalDctnDomainRgt[labelKey] = dropDownValue;
+      }, // 로그인 아이디, 작성자
+      checkWrtrUserId(wrtr) {
+        if (!this.userId) {
+          return false;
+        }
+
+        if (this.userId == "admin" || wrtr == this.userId) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    };
+  }
+</script>

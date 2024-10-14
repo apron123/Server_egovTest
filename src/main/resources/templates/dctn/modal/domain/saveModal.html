@@ -1,0 +1,139 @@
+<div
+        x-data="domainSaveModalAlpine()"
+        x-show.important="saveModal"
+        class="zModal"
+        :class="{[VAILDATE_CONF.class] : saveModal }"
+>
+    <div class="zModal_bg"></div>
+    <div class="zModal_wrap">
+        <div class="zModal_header">
+            <h2>도메인 사전 등록</h2>
+        </div>
+        <div class="section_line"></div>
+        <div class="zModal_body">
+            <div class="zModal_form">
+                <label class="form_label" data-key="domain_nm">도메인 명</label>
+                <input class="form_field" x-model="domainRgt.domain_nm"/>
+            </div>
+            <div class="zModal_form">
+                <label class="form_label" data-key="domain_clsfct_word">도메인 분류어</label>
+                <input class="form_field" x-model="domainRgt.domain_clsfct_word"/>
+            </div>
+            <div class="zModal_form">
+                <label class="form_label" data-key="logic_data_type">논리 데이터 유형</label>
+                <select class="form_field"
+                        x-model="domainRgt.logic_data_type"
+                        @change="selectDropdown(validateSchema.logic_data_type.key, $event.target.value)"
+                >
+                    <option value="">선택</option>
+                    <option value="XML">XML타입</option>
+                    <option value="CHAR">고정길이문자형</option>
+                    <option value="VARCHAR">가변길이문자형</option>
+                    <option value="ACTNO">실수</option>
+                    <option value="ALWC">정수</option>
+                    <option value="DATE">날짜-DATE</option>
+                    <option value="TS">날짜-TIMESTAMP</option>
+                    <option value="CLOB">문자형대형객체</option>
+                    <option value="BLOB">바이너리대형객체</option>
+                </select>
+            </div>
+            <div class="zModal_form">
+                <label class="form_label" data-key="domain_type">도메인 유형</label>
+                <select class="form_field"
+                        x-model="domainRgt.domain_type"
+                        @change="selectDropdown(validateSchema.domain_type.key, $event.target.value)"
+                >
+                    <option value="">선택</option>
+                    <option value="ANG">각도</option>
+                    <option value="AMTMN">금액</option>
+                    <option value="DT">날짜</option>
+                    <option value="AREA">면적</option>
+                    <option value="WGHT">무게</option>
+                    <option value="NO">번호</option>
+                    <option value="RATE">비율</option>
+                    <option value="QTY">수량</option>
+                    <option value="TIME">시간</option>
+                    <option value="IDTFR">식별자</option>
+                    <option value="TPRT">온도</option>
+                    <option value="CD">코드</option>
+                    <option value="NAME">이름</option>
+                    <option value="COORD">좌표</option>
+                    <option value="DMNSN">차원</option>
+                    <option value="VLM">체적</option>
+                    <option value="TEXT">텍스트</option>
+                </select>
+            </div>
+            <div class="zModal_form">
+                <label class="form_label" data-key="rpst_yn">대표 여부</label>
+                <select class="form_field"
+                        x-model="domainRgt.rpst_yn"
+                        @change="selectDropdown(validateSchema.rpst_yn.key, $event.target.value)"
+                >
+                    <option value="">선택</option>
+                    <option value="Y">예</option>
+                    <option value="N">아니오</option>
+                </select>
+            </div>
+            <template x-if="checkAdminId()">
+                <div class="zModal_form">
+                    <label class="form_label" data-key="clsfct">분류 코드</label>
+                    <select class="form_field"
+                            x-model="domainRgt.clsfct"
+                            @change="selectDropdown(validateSchema.clsfct.key, $event.target.value)"
+                    >
+                        <option value="">선택</option>
+                        <option value="ND">국방데이터</option>
+                        <option value="PBL">공공데이터</option>
+                        <option value="USER">CBM+데이터</option>
+                    </select>
+                </div>
+            </template>
+
+            <template x-if="!checkAdminId()">
+                <div class="zModal_form">
+                    <label class="form_label" data-key="clsfct">분류 코드</label>
+                    <select class="form_field" x-model="domainRgt.clsfct">
+                        <option value="">선택</option>
+                        <option value="USER">CBM+데이터</option>
+                    </select>
+                </div>
+            </template>
+
+            <div class="zModal_form">
+                <label class="form_label" data-key="wrtr">작성자</label>
+                <span class="form_field" x-text="domainRgt.wrtr"></span>
+            </div>
+        </div>
+
+        <div class="zModal_footer">
+            <div class="btn_wrap">
+                <button @click="validateAndSave" type="button" class="btn blue">
+                    저장
+                </button>
+                <button @click="saveModal = false" type="button" class="btn red">
+                    취소
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function domainSaveModalAlpine() {
+        return {
+            /**
+             * Sets the value of a dropdown in the domain registration object.
+             * @param {string} key - The key of the dropdown.
+             * @param {string} dropDownValue - The value to set for the dropdown.
+             */
+            selectDropdown(key, dropDownValue) {
+                // Set the value of the dropdown in the domain registration object
+                this.domainRgt[key] = dropDownValue;
+            },
+            closeSaveModal() {
+                this.saveModal = false;
+                this.domainRgtInit();
+            },
+        };
+    }
+</script>

@@ -1,0 +1,79 @@
+<div
+        x-data="wordSaveModalAlpine()"
+        x-show.important="saveModal"
+        class="zModal"
+        :class="{[VAILDATE_CONF.class] : saveModal }"
+>
+    <div class="zModal_bg"></div>
+    <div class="zModal_wrap">
+        <div class="zModal_header">
+            <h2>데이터 사전 등록</h2>
+        </div>
+        <div class="section_line"></div>
+        <div class="zModal_body">
+            <div class="zModal_form">
+                <label class="form_label" data-key="abbrnm">약어명</label>
+                <input class="form_field" x-model="dctnRgt.abbrnm"/>
+            </div>
+            <div class="zModal_form">
+                <label class="form_label" data-key="word_nm">단어 명</label>
+                <input class="form_field" x-model="dctnRgt.word_nm"/>
+            </div>
+            <div class="zModal_form">
+                <label class="form_label" data-key="engnm">영문명</label>
+                <input class="form_field" x-model="dctnRgt.engnm"/>
+            </div>
+            <div class="zModal_form">
+                <label class="form_label mba" data-key="word_expln">단어 설명</label>
+                <textarea class="form_field" x-model="dctnRgt.word_expln" rows="13"></textarea>
+            </div>
+            <template x-if="checkAdminId()">
+                <div class="zModal_form">
+                    <label class="form_label" data-key="clsfct">분류 코드</label>
+                    <select class="form_field"
+                            x-model="dctnRgt.clsfct"
+                            @change="selectDropdown(validateSchema.clsfct.key, $event.target.value)"
+                    >
+                        <option value="">선택</option>
+                        <option value="ND">국방데이터</option>
+                        <option value="PBL">공공데이터</option>
+                        <option value="USER">CBM+데이터</option>
+                    </select>
+                </div>
+            </template>
+            <template x-if="!checkAdminId()">
+                <div class="zModal_form">
+                    <label class="form_label" data-key="clsfct">분류 코드</label>
+                    <select class="form_field" x-model="dctnRgt.clsfct">
+                        <option value="">선택</option>
+                        <option value="USER">CBM+데이터</option>
+                    </select>
+                </div>
+            </template>
+
+            <div class="zModal_form">
+                <label class="form_label" data-key="wrtr">작성자</label>
+                <span class="form_field" x-text="dctnRgt.wrtr"></span>
+            </div>
+        </div>
+        <div class="btn_wrap">
+            <button @click="validateAndSave" type="button" class="btn blue">
+                저장
+            </button>
+            <button @click="saveModal =false" type="button" class="btn red">
+                취소
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function wordSaveModalAlpine() {
+        return {
+            closeSaveModal() {
+                this.saveModal = false;
+                this.dctnRgtInit();
+            },
+        };
+    }
+</script>

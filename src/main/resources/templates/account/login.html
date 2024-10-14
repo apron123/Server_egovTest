@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <th:block th:replace="~{common/header::headerFragment}"></th:block>
+  </head>
+  <body>
+    <div class="wrap layout" id="loginNoDiv">
+      <div class="account">
+        <div
+          th:replace="~{dctn/modal/header :: headerFragment(depth1 = '로그인')}"
+        ></div>
+
+        <div class="top_area">
+          <div>
+            <div class="title_box">
+              <h2>로그인</h2>
+              <!-- <h1 class="title">{{ .title}}</h1> -->
+              <!-- <img class="image_1" src="../static/img/IMG_0050.PNG" alt="이미지 파일" /> -->
+            </div>
+          </div>
+        </div>
+        <div class="section_area">
+          <div class="inner">
+            <label class="mra" for="userId">아이디</label>
+            <input class="" value="" id="userId" type="text" placeholder="ID" />
+            <label class="mra" for="userPw">패스워드</label>
+            <input
+              class=""
+              value=""
+              id="userPw"
+              type="password"
+              placeholder="PW"
+            />
+          </div>
+          <div class="inner">
+            <div class="btn_wrap">
+              <input
+                type="button"
+                class="btn lightgray"
+                onclick="create()"
+                value="로그인"
+              />
+              <input
+                type="button"
+                class="btn lightgray"
+                onclick="location.href = '/view/account/signUp'"
+                value="회원가입"
+              />
+            </div>
+            <div class="btn_wrap">
+              <input
+                type="button"
+                class="btn lightgray"
+                onclick="location.href = '/view/account/find'"
+                value="ID / PW 찾기"
+              />
+              <!--                    <input type="button" class="btn lightgray" onclick="searchPW()" value="PW 찾기"/>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <footer>
+    <th:block th:replace="~{common/footer::footerFragment}"></th:block>
+  </footer>
+
+  <script type="text/javascript" th:src="@{/account/login.js}"></script>
+</html>

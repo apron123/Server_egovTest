@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="headerFragment"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${depth1} ?: '페이지 제목(소분류)'"></title>
+  </head>
+  <div class="inner row">
+    <div class="btn_wrap w100per">
+<!--      <a class="btn lightgray" th:href="@{/view/main}">메인 페이지</a>-->
+      <a class="btn lightgray" th:href="@{/view/dctn/word}">데이터 사전</a>
+      <a class="btn lightgray" th:href="@{/view/dctn/domain}">도메인 사전</a>
+      <a class="btn lightgray" th:href="@{/view/dctn/wordAccess}">데이터 승인</a>
+      <a class="btn lightgray" th:href="@{/view/dctn/domainAccess}">도메인 승인</a>
+      <a
+        class="btn lightgray mla"
+        th:href="@{/view/account/login}"
+        id="headerLogin"
+        >로그인</a
+      >
+    </div>
+  </div>
+  <script type="text/javascript" th:src="@{/common/axios.js}"></script>
+  <script type="text/javascript" th:src="@{/common/apiManager.js}"></script>
+  <script type="text/javascript" th:src="@{/account/logout.js}"></script>
+
+</html>

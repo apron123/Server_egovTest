@@ -1,0 +1,262 @@
+<div
+  x-data="dctnViewModalAlpineData()"
+  x-show.important="viewModal"
+  class="zModal"
+  :class="{[VAILDATE_CONF.class] : !transFlag }"
+  id="viewModalList"
+>
+  <div class="zModal_bg"></div>
+    <!-- 조회 시 --><!-- 조회 시 --><!-- 조회 시 -->
+    <!-- 조회 시 --><!-- 조회 시 --><!-- 조회 시 -->
+    <!-- 조회 시 --><!-- 조회 시 --><!-- 조회 시 -->
+    <template x-if="transFlag">
+      <div class="zModal_wrap">
+        <div class="zModal_header">
+          <h2>단어 조회</h2>
+          <button @click="viewModal = false" type="button" class="btn lightgray mla">
+            닫기
+          </button>
+        </div>
+        <div class="section_line"></div>
+        <div class="zModal_body">
+          <div class="zModal_form">
+            <label class="form_label">약어명</label>
+            <span class="form_field" x-text="dctnRgt.abbrnm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">단어 명</label>
+            <span class="form_field" x-text="dctnRgt.word_nm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">영문명</label>
+            <span class="form_field" x-text="dctnRgt.engnm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label mba">단어 설명</label>
+            <span class="form_field" x-text="dctnRgt.word_expln"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">분류 코드</label>
+            <span class="form_field" x-text="dctnRgt.cd_nm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">작성자</label>
+            <span class="form_field" x-text="dctnRgt.wrtr"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">생성 일시</label>
+            <span class="form_field" x-text="dctnRgt.crt_dttm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">수정자</label>
+            <span class="form_field" x-text="dctnRgt.mdfr || '-직전 수정 이력 없음-'"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">수정 사유</label>
+            <span class="form_field" x-text="dctnRgt.mdfr_rsn || '-직전 수정 이력 없음-'"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label">수정 일시</label>
+            <span class="form_field" x-text="dctnRgt.mdfc_dttm || '-직전 수정 이력 없음-'"></span>
+          </div>
+        </div>
+
+        <div class="zModal_footer">
+          <div class="btn_wrap">
+            <template x-if="checkWrtrUserId(dctnRgt.wrtr)">
+              <button @click="updateFlag()" type="button" class="btn blue">
+                수정
+              </button>
+            </template>
+            <template x-if="checkWrtrUserId(dctnRgt.wrtr)">
+              <button class="btn red" @click="openDeleteModal()">
+                삭제
+              </button>
+            </template>
+          </div>
+        </div>
+      </div>
+    </template>
+    <!-- 수정 시 --><!-- 수정 시 --><!-- 수정 시 -->
+    <!-- 수정 시 --><!-- 수정 시 --><!-- 수정 시 -->
+    <!-- 수정 시 --><!-- 수정 시 --><!-- 수정 시 -->
+    <template x-if="!transFlag">
+      <div class="zModal_wrap">
+        <div class="zModal_header">
+          <h2>단어 수정</h2>
+          <button @click="viewModal = false" type="button" class="btn lightgray mla">
+            닫기
+          </button>
+        </div>
+        <div class="section_line"></div>
+        <div class="zModal_body">
+          <div class="zModal_form">
+            <label class="form_label" data-key="abbrnm">약어명</label>
+            <input class="form_field" x-model="viewModalDctnRgt.abbrnm" />
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="word_nm">단어 명</label>
+            <input class="form_field" x-model="viewModalDctnRgt.word_nm" />
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="engnm">영문명</label>
+            <input class="form_field" x-model="viewModalDctnRgt.engnm" />
+          </div>
+          <div class="zModal_form">
+            <label class="form_label mba" data-key="word_expln">단어 설명</label>
+            <textarea class="form_field"
+              x-model="viewModalDctnRgt.word_expln"
+              rows="13"
+            ></textarea>
+          </div>
+          <template x-if="checkAdminId()">
+            <div class="zModal_form">
+              <label class="form_label" data-key="clsfct">분류 코드</label>
+              <select class="form_field"
+                x-model="viewModalDctnRgt.clsfct"
+                @change="selectDropdown($event.target.value)"
+              >
+                <option value="">선택</option>
+                <option value="ND">국방데이터</option>
+                <option value="PBL">공공데이터</option>
+                <option value="USER">CBM+데이터</option>
+              </select>
+            </div>
+          </template>
+
+          <template x-if="!checkAdminId()">
+            <div class="zModal_form">
+              <label class="form_label" data-key="clsfct">분류 코드</label>
+              <select class="form_field" x-model="viewModalDctnRgt.clsfct">
+                <option value="USER">CBM+데이터</option>
+              </select>
+            </div>
+          </template>
+
+          <div class="zModal_form">
+            <label class="form_label" data-key="wrtr">작성자</label>
+            <span class="form_field" x-text="viewModalDctnRgt.wrtr"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="crt_dttm">생성 일시</label>
+            <span class="form_field" x-text="viewModalDctnRgt.crt_dttm"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="mdfr">수정자</label>
+            <span class="form_field" x-text="viewModalDctnRgt.mdfr"></span>
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="mdfr_rsn">수정 사유</label>
+            <input class="form_field" x-model="viewModalDctnRgt.mdfr_rsn" />
+          </div>
+          <div class="zModal_form">
+            <label class="form_label" data-key="mdfc_dttm">수정 일시</label>
+            <span class="form_field"
+              x-text="viewModalDctnRgt.mdfc_dttm || '-직전 수정 이력 없음-'"
+            ></span>
+          </div>
+        </div>
+        <div class="zModal_footer">
+          <div class="btn_wrap">
+            <button @click="save()" type="button" class="btn blue">저장</button>
+            <button @click="transFlag = true" type="button" class="btn red">
+              취소
+            </button>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+<script>
+  function dctnViewModalAlpineData() {
+    return {
+      //상세 조회 or 수정 모달 flag
+      transFlag: true,
+      init() {},
+      closeViewModal() {
+        this.transFlag = true;
+        this.viewModal = false;
+      },
+      updateFlag() {
+        this.transFlag = false;
+        this.viewModalDctnRgt = { ...this.dctnRgt };
+      },
+      save() {
+        let error = "";
+        setValidAttribute(this.validateSchema);
+        // 필요한 값만 보내야 함. 등록 시 필요한 값만
+
+        const {
+          abbrnm,
+          word_nm,
+          engnm,
+          word_expln,
+          clsfct,
+          wrtr,
+          mdfr,
+          mdfr_rsn,
+        } = this.viewModalDctnRgt;
+        // 새로운 오브젝트 생성 해야함
+        const newObject = {
+          abbrnm,
+          word_nm,
+          engnm,
+          word_expln,
+          clsfct,
+          wrtr,
+          mdfr: this.userId,
+          mdfr_rsn,
+        };
+
+        let arrayValidateObj = getInputListValidate(newObject);
+        // console.log(arrayValidateObj);
+        // validateCommonMethod에 사용할 array 만들어 주는 함수 호출
+        error = validateCommonMethod(arrayValidateObj);
+
+        if (error === "") {
+        } else {
+          alert(error); // 에러 메시지를 표시
+          return;
+        }
+        console.log(newObject);
+
+        fetch("/dctn/" + this.viewModalDctnRgt.dctn_info_seq, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "PUT",
+          body: JSON.stringify(convertEmptyStringsToNull(newObject)),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result);
+            if (result.result_flag) {
+              alert("수정 성공");
+              // 상세 보기 모달로 변경
+              this.transFlag = true;
+              //조회 api 요청
+              this.openViewModal(null, this.viewModalDctnRgt.dctn_info_seq);
+            } else {
+              alert("등록 실패: " + result.result_msg);
+            }
+          });
+      },
+      selectDropdown(dropDownValue) {
+        this.viewModalDctnRgt.clsfct = dropDownValue;
+      },
+      // 로그인 아이디, 작성자
+      checkWrtrUserId(wrtr) {
+        if (!this.userId) {
+          return false;
+        }
+
+        if (this.userId == "admin" || wrtr == this.userId) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    };
+  }
+</script>
